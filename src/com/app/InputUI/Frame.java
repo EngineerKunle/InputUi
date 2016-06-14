@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Frame extends JFrame{
+public class Frame extends JFrame implements KeyListener{ 
 	
 	private int width = 500;
 	private int height = 200;
@@ -20,6 +22,7 @@ public class Frame extends JFrame{
 	private JLabel jLable = new JLabel();
 	private JButton clickMe;
 	private String data;
+	
 	
 	public Frame(String title){
 		super(title);
@@ -41,12 +44,11 @@ public class Frame extends JFrame{
 	
 	//call to create Panel
 	private JPanel setPanel(){
-		
 		JPanel jpanel = new JPanel(new GridBagLayout());
 		jpanel.setBackground(Color.GRAY);
 		clickMe = new JButton("Update Text");
 
-		
+		this.getRootPane().setDefaultButton(clickMe);
 		GridBagConstraints cts = new GridBagConstraints();
 		cts.anchor = GridBagConstraints.WEST;
 		cts.gridx = 1;
@@ -77,6 +79,26 @@ public class Frame extends JFrame{
 	
 		jpanel.setVisible(true);
 		return jpanel;
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER){
+//			data = jField.getText();
+//			jLable.setText(data);
+			System.out.println("enter has been pressed");	
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
