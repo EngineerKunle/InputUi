@@ -8,13 +8,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
-public class Frame extends JFrame implements KeyListener{ 
+public class Frame extends JFrame { 
 	
 	private int width = 500;
 	private int height = 200;
@@ -22,7 +26,8 @@ public class Frame extends JFrame implements KeyListener{
 	private JLabel jLable = new JLabel();
 	private JButton clickMe;
 	private String data;
-	
+	private Action enterAction;
+
 	
 	public Frame(String title){
 		super(title);
@@ -31,6 +36,7 @@ public class Frame extends JFrame implements KeyListener{
 	    setPanel();
 	    add(setPanel());
 	}
+	
 	//initialize the text area
 	private JTextField initTextArea(){
 
@@ -47,8 +53,9 @@ public class Frame extends JFrame implements KeyListener{
 		JPanel jpanel = new JPanel(new GridBagLayout());
 		jpanel.setBackground(Color.GRAY);
 		clickMe = new JButton("Update Text");
-
-		this.getRootPane().setDefaultButton(clickMe);
+		
+		clickMe.setBackground(Color.GREEN);
+		//this.getRootPane().setDefaultButton(clickMe);
 		GridBagConstraints cts = new GridBagConstraints();
 		cts.anchor = GridBagConstraints.WEST;
 		cts.gridx = 1;
@@ -76,29 +83,22 @@ public class Frame extends JFrame implements KeyListener{
 				jLable.setText(data);
 			}	
 		});
-	
+		
+		enterAction = new AbstractAction() {
+			
+			public void actionPerformed(ActionEvent e) {
+				data = jField.getText();
+				//System.out.println(data);
+				jLable.setText(data);
+		    }
+		};
+		
+		jpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterAction");
+		jpanel.getActionMap().put("someAction", enterAction);
+		
 		jpanel.setVisible(true);
 		return jpanel;
-	}
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-//			data = jField.getText();
-//			jLable.setText(data);
-			System.out.println("enter has been pressed");	
-		}
-	}
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
